@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ruka071 | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
+        <h1 class="text-2xl font-bold tracking-tighter">ruka<span class="text-sky-400">071</span></h1>
+        <div class="space-x-6 text-sm uppercase tracking-widest font-medium">
+            <a href="#proyectos" class="hover:text-sky-400 transition">Proyectos</a>
+            <a href="#contacto" class="hover:text-sky-400 transition">Contacto</a>
+        </div>
+    </nav>
+
+    <section class="flex flex-col items-center justify-center py-24 text-center px-4">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-6">Hola, soy <span class="gradient-text">ruka071</span></h2>
+        <p class="text-slate-400 text-lg md:text-xl max-w-2xl">
+            Desarrollador y creativo enfocado en construir experiencias digitales únicas y funcionales.
+        </p>
+        <div class="mt-10">
+            <a href="#proyectos" class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-full font-semibold transition shadow-lg shadow-sky-500/20">
+                Ver mi trabajo
+            </a>
+        </div>
+    </section>
+
+    <section id="proyectos" class="max-w-6xl mx-auto px-6 py-20">
+        <h3 class="text-3xl font-bold mb-12 border-b border-slate-800 pb-4">Proyectos Destacados</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="bg-slate-800/50 p-1 rounded-2xl border border-slate-700 hover:border-sky-500/50 transition">
+                <div class="bg-slate-900 p-8 rounded-2xl h-full">
+                    <span class="text-sky-400 text-xs font-bold uppercase tracking-widest">Web App</span>
+                    <h4 class="text-2xl font-bold mt-2 mb-4">Nombre del Proyecto</h4>
+                    <p class="text-slate-400 mb-6">Una breve descripción de lo que ruka071 construyó aquí. Enfocado en rendimiento y diseño.</p>
+                    <div class="flex gap-3">
+                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">React</span>
+                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">Tailwind</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 p-1 rounded-2xl border border-slate-700 hover:border-sky-500/50 transition">
+                <div class="bg-slate-900 p-8 rounded-2xl h-full">
+                    <span class="text-purple-400 text-xs font-bold uppercase tracking-widest">UI/UX</span>
+                    <h4 class="text-2xl font-bold mt-2 mb-4">Diseño de Interfaz</h4>
+                    <p class="text-slate-400 mb-6">Rediseño completo de una plataforma de e-commerce centrada en el usuario.</p>
+                    <div class="flex gap-3">
+                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">Figma</span>
+                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">Next.js</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contacto" class="bg-slate-900/50 py-20 px-6 text-center">
+        <h3 class="text-3xl font-bold mb-6">¿Hablamos?</h3>
+        <p class="text-slate-400 mb-8">Estoy disponible para nuevos proyectos y colaboraciones.</p>
+        <a href="mailto:tu-correo@ejemplo.com" class="text-xl font-medium text-sky-400 hover:underline">
+            hola@ruka071.dev
+        </a>
+    </section>
+
+    <footer class="p-10 text-center text-slate-500 text-sm">
+        <p>© 2026 ruka071. Hecho con ❤️ y código.</p>
+    </footer>
+
+</body>
+</html>
