@@ -1,27 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ruka071</title> 
+    <title>ruka071</title>
+    <!-- Favicon -->
     <link rel="icon" href="https://png.pngtree.com/png-vector/20240314/ourmid/pngtree-angry-green-skull-ice-cream-mascot-cartoon-style-png-image_11953735.png">
+    <!-- Font -->
     <link href="https://fonts.cdnfonts.com/css/nitro-break" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #39ff14;
+            --bg-color: #000000;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: black;
+            background-color: var(--bg-color);
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
+            color: var(--primary-color);
         }
 
+        /* Matrix Background */
         canvas {
             display: block;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 1;
+        }
+
+        /* Overlay to make text more readable */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            z-index: 2;
+            pointer-events: none;
         }
 
         .container {
@@ -36,61 +56,71 @@
         }
 
         .hacker-text {
-            font-family: 'Nitro Break', sans-serif;
-            font-size: 10rem; /* Ajustado un poco para que quepa mejor */
+            font-family: 'Nitro Break', 'Courier New', sans-serif;
+            font-size: clamp(3rem, 15vw, 10rem);
             margin: 0;
             cursor: default;
             user-select: none;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            transform: translateY(25px);
-            letter-spacing: 2px;
+            gap: 10px;
             pointer-events: auto;
+            filter: drop-shadow(0 0 15px rgba(57, 255, 20, 0.5));
         }
 
         .letter {
             position: relative;
             display: inline-block;
-            color: #39ff14;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .letter:hover {
-            transform: scale(1.15) translateY(-10px);
-            filter: drop-shadow(0 0 35px rgba(57, 255, 20, 1));
+            transform: scale(1.2) translateY(-15px);
+            color: #fff;
+            filter: drop-shadow(0 0 30px var(--primary-color));
             z-index: 20;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            pointer-events: auto;
+        }
+
+        .discord-tag {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            letter-spacing: 2px;
         }
 
         .discord-link {
             display: inline-block;
-            margin-top: 30px;
             font-size: 1.5rem;
             color: #fff;
             text-decoration: none;
             position: relative;
-            padding: 12px 30px;
-            font-family: 'Courier New', Courier, monospace; 
+            padding: 15px 40px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            border: 2px solid #39ff14;
-            overflow: hidden;
+            border: 2px solid var(--primary-color);
             transition: all 0.4s ease;
-            z-index: 100;
-            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
         }
 
         .discord-link:hover {
-            background: #39ff14;
             color: black;
-            box-shadow: 0 0 30px rgba(57, 255, 20, 0.8);
+            background: var(--primary-color);
+            box-shadow: 0 0 40px var(--primary-color);
+            transform: scale(1.05);
         }
 
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .hacker-text { font-size: 4rem; gap: 5px; }
-            .discord-link { font-size: 1rem; }
+            .hacker-text { gap: 5px; }
+            .discord-link { font-size: 1rem; padding: 12px 25px; }
         }
     </style>
 </head>
@@ -98,58 +128,63 @@
 <body>
 
     <canvas id="matrixCanvas"></canvas>
+    <div class="overlay"></div>
 
     <div class="container">
         <h1 class="hacker-text" id="rukaText"></h1>
-        <a href="https://discord.gg/RmSr3EC8cK" target="_blank" class="discord-link">
-            join plaka
-        </a>
+        
+        <div class="info-box">
+            <span class="discord-tag">discord: ruka071_</span>
+            <a href="https://discord.gg/plaka" target="_blank" class="discord-link">
+                JOIN PLAKA
+            </a>
+        </div>
     </div>
 
     <script>
+        // --- 1. Text Animation Initialization ---
         const textContainer = document.getElementById('rukaText');
         const textString = "ruka071";
 
-        // Generar letras
-        textString.split('').forEach((char, index) => {
+        textString.split('').forEach((char) => {
             const span = document.createElement('span');
             span.className = 'letter';
             span.textContent = char;
-            span.setAttribute('data-char', char);
-            span.style.animationDelay = `${index * 0.15}s`;
             textContainer.appendChild(span);
         });
 
+        // --- 2. Matrix Rain Effect ---
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
 
-        // VARIABLES MOVIDAS ARRIBA PARA EVITAR ERRORES
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789';
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const letters = katakana.split('');
         const fontSize = 16;
         let drops = [];
+        let columns = 0;
+
+        const mouse = { x: -1000, y: -1000 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            const columns = Math.floor(canvas.width / fontSize);
+            columns = Math.floor(canvas.width / fontSize);
             drops = [];
             for (let x = 0; x < columns; x++) {
                 drops[x] = Math.random() * -100;
             }
         }
 
-        const mouse = { x: -1000, y: -1000 };
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
         function draw() {
+            // Semi-transparent black rectangle to create trail effect
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#0F0';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
@@ -157,28 +192,35 @@
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
 
+                // Interaction: Brighten characters near mouse
                 const dx = x - mouse.x;
                 const dy = y - mouse.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 100) {
-                    ctx.fillStyle = '#FFF'; // Brillo blanco cerca del mouse
+                if (distance < 150) {
+                    ctx.fillStyle = '#fff';
                 } else {
                     ctx.fillStyle = '#0F0';
                 }
 
                 ctx.fillText(text, x, y);
 
+                // Sending drop back to top randomly after it crosses screen
                 if (y > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
+                
+                // Increment Y position
                 drops[i]++;
             }
         }
 
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        setInterval(draw, 33);
+        // --- 3. Execution ---
+        window.onload = () => {
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            setInterval(draw, 33);
+        };
     </script>
 </body>
 </html>
