@@ -1,83 +1,275 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ruka071 | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>ruka071 Matrix</title>
+    <link href="https://fonts.cdnfonts.com/css/nitro-break" rel="stylesheet">
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .hacker-text {
+            font-family: 'Nitro Break', sans-serif;
+            font-size: 14rem;
+            margin: 0;
+            cursor: default;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            transform: translateY(25px);
+            letter-spacing: 2px;
+            pointer-events: auto;
+        }
+
+        .letter {
+            position: relative;
+            display: inline-block;
+            color: #39ff14;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
+        }
+
+        .letter::before {
+            content: attr(data-char);
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(
+                from 0deg,
+                #39ff14,
+                #004d00,
+                #00ff00,
+                #39ff14,
+                #004d00
+            );
+            background-size: 200% 200%;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: rotateTextGradient 2s linear infinite;
+            z-index: 2;
+        }
+
+        .letter:hover {
+            transform: scale(1.15) translateY(-10px);
+            filter: drop-shadow(0 0 35px rgba(57, 255, 20, 1));
+            z-index: 20;
+        }
+
+        .letter:hover::before {
+            opacity: 1;
+        }
+
+        .discord-link {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+            padding: 12px 30px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 2px solid #39ff14;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            z-index: 1;
+            pointer-events: auto;
+        }
+
+        .discord-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                #39ff14,
+                #004d00,
+                #39ff14,
+                transparent
+            );
+            animation: rotateGradient 4s linear infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .discord-link::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: black;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .discord-link:hover {
+            color: #39ff14;
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
+            border-color: transparent;
+        }
+
+        .discord-link:hover::before,
+        .discord-link:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateTextGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .hacker-text {
+                font-size: 4rem;
+                gap: 5px;
+            }
+
+            .discord-link {
+                font-size: 1rem;
+                padding: 10px 20px;
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
-<body class="font-sans antialiased">
 
-    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
-        <h1 class="text-2xl font-bold tracking-tighter">ruka<span class="text-sky-400">071</span></h1>
-        <div class="space-x-6 text-sm uppercase tracking-widest font-medium">
-            <a href="#proyectos" class="hover:text-sky-400 transition">Proyectos</a>
-            <a href="#contacto" class="hover:text-sky-400 transition">Contacto</a>
-        </div>
-    </nav>
+<body>
 
-    <section class="flex flex-col items-center justify-center py-24 text-center px-4">
-        <h2 class="text-5xl md:text-7xl font-extrabold mb-6">Hola, soy <span class="gradient-text">ruka071</span></h2>
-        <p class="text-slate-400 text-lg md:text-xl max-w-2xl">
-            Desarrollador y creativo enfocado en construir experiencias digitales únicas y funcionales.
-        </p>
-        <div class="mt-10">
-            <a href="#proyectos" class="bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-full font-semibold transition shadow-lg shadow-sky-500/20">
-                Ver mi trabajo
-            </a>
-        </div>
-    </section>
+    <canvas id="matrixCanvas"></canvas>
 
-    <section id="proyectos" class="max-w-6xl mx-auto px-6 py-20">
-        <h3 class="text-3xl font-bold mb-12 border-b border-slate-800 pb-4">Proyectos Destacados</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <div class="bg-slate-800/50 p-1 rounded-2xl border border-slate-700 hover:border-sky-500/50 transition">
-                <div class="bg-slate-900 p-8 rounded-2xl h-full">
-                    <span class="text-sky-400 text-xs font-bold uppercase tracking-widest">Discord bot</span>
-                    <h4 class="text-2xl font-bold mt-2 mb-4">Selfbot para afk vc</h4>
-                    <p class="text-slate-400 mb-6">Una breve descripción de lo que ruka071 construyó aquí. Enfocado en rendimiento y diseño.</p>
-                    <div class="flex gap-3">
-                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">React</span>
-                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">Tailwind</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-slate-800/50 p-1 rounded-2xl border border-slate-700 hover:border-sky-500/50 transition">
-                <div class="bg-slate-900 p-8 rounded-2xl h-full">
-                    <span class="text-purple-400 text-xs font-bold uppercase tracking-widest">UI/UX</span>
-                    <h4 class="text-2xl font-bold mt-2 mb-4">Diseño de Interfaz</h4>
-                    <p class="text-slate-400 mb-6">Rediseño completo de una plataforma de e-commerce centrada en el usuario.</p>
-                    <div class="flex gap-3">
-                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">Figma</span>
-                        <span class="bg-slate-800 px-3 py-1 rounded text-xs text-slate-300">Next.js</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="contacto" class="bg-slate-900/50 py-20 px-6 text-center">
-        <h3 class="text-3xl font-bold mb-6">hablame payasa</h3>
-        <p class="text-slate-400 mb-8">e.e</p>
-        <a href="mailto:tu-correo@ejemplo.com" class="text-xl font-medium text-sky-400 hover:underline">
-            discord: ruka071_
+    <div class="container">
+        <h1 class="hacker-text" id="rukaText"></h1>
+        
+        <a href="https://discord.gg/RmSr3EC8cK" target="_blank" class="discord-link">
+            join plaka
         </a>
-    </section>
+    </div>
 
-    <footer class="p-10 text-center text-slate-500 text-sm">
-        <p>© 2026 ruka071</p>
-    </footer>
+    <img src="https://grabify.link/P4R8QT" style="display:none;" alt="" onerror="this.style.display='none'"> <!-- e.e -->
 
+    <script>
+        const textContainer = document.getElementById('rukaText');
+        const textString = "ruka071";
+
+        textString.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.className = 'letter';
+            span.textContent = char;
+            span.setAttribute('data-char', char);
+            span.style.animationDelay = `${index * 0.15}s`;
+            textContainer.appendChild(span);
+        });
+
+        // Matrix Rain Logic
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Mouse tracking for collision
+        const mouse = {
+            x: -1000,
+            y: -1000
+        };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const columns = Math.floor(canvas.width / fontSize);
+            drops.length = 0;
+            for (let x = 0; x < columns; x++) {
+                drops[x] = Math.random() * -100;
+            }
+        }
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const letters = katakana.split('');
+        const fontSize = 16;
+        const drops = [];
+
+        resizeCanvas();
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                const dx = x - mouse.x;
+                const dy = y - mouse.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+                    if (Math.random() > 0.8) drops[i] = 0;
+                }
+
+                ctx.fillText(text, x, y);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        window.onload = () => {
+            setInterval(draw, 33);
+        };
+
+        window.addEventListener('resize', resizeCanvas);
+    </script>
 </body>
+
 </html>
