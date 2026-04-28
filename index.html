@@ -1,215 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruka071</title>
-    <link rel="icon" href="https://png.pngtree.com/png-vector/20240314/ourmid/pngtree-angry-green-skull-ice-cream-mascot-cartoon-style-png-image_11953735.png">
-    <link href="https://fonts.cdnfonts.com/css/nitro-break" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #39ff14;
-            --bg-color: #000000;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruka071</title>
+  <link rel="icon" href="https://png.pngtree.com/png-vector/20240314/ourmid/pngtree-angry-green-skull-ice-cream-mascot-cartoon-style-png-image_11953735.png">
+  <link href="https://fonts.cdnfonts.com/css/nitro-break" rel="stylesheet">
+  <style>
+    /* reset básico */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            overflow: hidden;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--primary-color);
-        }
+    body {
+      background: black;
+      color: #39ff14; /* verde the skuaker haker 7u7*/
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
 
-        canvas {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
+    #matrix {
+      position: absolute;
+      top: 0; left: 0;
+      z-index: -1; 
+    }
 
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
+    /* bordes oscuros */
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle, transparent 10%, rgba(0, 0, 0, 0.9) 100%);
+      pointer-events: none;
+    }
 
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10; 
-            text-align: center;
-            width: 100%;
-            pointer-events: none;
-        }
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .hacker-text {
-            font-family: 'Nitro Break', 'Courier New', sans-serif;
-            font-size: clamp(3rem, 15vw, 10rem);
-            margin: 0;
-            cursor: default;
-            user-select: none;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            pointer-events: auto;
-            filter: drop-shadow(0 0 15px rgba(57, 255, 20, 0.5));
-        }
+    #wordmark {
+      font-family: 'Nitro Break', sans-serif;
+      font-size: 8rem;
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.6);
+      cursor: default;
+      user-select: none;
+    }
 
-        .letter {
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+    /* hacer que las letras reboten */
+    #wordmark span {
+      display: inline-block;
+      transition: all 0.2s ease;
+    }
 
-        .letter:hover {
-            transform: scale(1.2) translateY(-15px);
-            color: #fff;
-            filter: drop-shadow(0 0 30px var(--primary-color));
-            z-index: 20;
-        }
+    #wordmark span:hover {
+      color: white;
+      transform: scale(1.1) translateY(-10px);
+      text-shadow: 0 0 20px #39ff14;
+    }
 
-        .info-box {
-            margin-top: 20px;
-            pointer-events: auto;
-        }
+    .socials {
+      margin-top: 30px;
+      text-align: center;
+    }
 
-        .discord-tag {
-            display: block;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            opacity: 0.8;
-            letter-spacing: 2px;
-        }
+    .socials p {
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      opacity: 0.8;
+    }
 
-        .discord-link {
-            display: inline-block;
-            font-size: 1.5rem;
-            color: #fff;
-            text-decoration: none;
-            position: relative;
-            padding: 15px 40px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            border: 2px solid var(--primary-color);
-            transition: all 0.4s ease;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-        }
+    #discord-btn {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      padding: 10px 30px;
+      border: 2px solid #39ff14;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      transition: 0.3s;
+    }
 
-        .discord-link:hover {
-            color: black;
-            background: var(--primary-color);
-            box-shadow: 0 0 40px var(--primary-color);
-            transform: scale(1.05);
-        }
+    #discord-btn:hover {
+      background: #39ff14;
+      color: black;
+      box-shadow: 0 0 30px #39ff14;
+      transform: scale(1.05);
+    }
 
-        @media (max-width: 768px) {
-            .hacker-text { gap: 5px; }
-            .discord-link { font-size: 1rem; padding: 12px 25px; }
-        }
-    </style>
+    @media (max-width: 768px) {
+      #wordmark { font-size: 4rem; }
+      #discord-btn { font-size: 1.2rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
-    <div class="overlay"></div>
+  <canvas id="matrix"></canvas>
+  <div class="overlay"></div>
 
-    <div class="container">
-        <h1 class="hacker-text" id="rukaText"></h1>
-        
-        <div class="info-box">
-            <span class="discord-tag">discord: ruka071.</span>
-            <a href="https://discord.gg/ruka" target="_blank" class="discord-link">
-                CHAMACO QUE TE DEN POR CULO
-            </a>
-        </div>
+  <div class="container">
+    <h1 id="wordmark"></h1>
+    <div class="socials">
+      <p>telegram: @sodomizador</p>
+      <a id="discord-btn" href="https://discord.gg/hPGzMTeDDD" target="_blank">JOIN</a>
     </div>
+  </div>
 
-    <script>
-        const textContainer = document.getElementById('rukaText');
-        const textString = "ruka071";
+  <script>
+    // separar el título mmmmmmmmm
+    let titleStr = "ruka071";
+    let titleEl = document.getElementById("wordmark");
+    for(let i=0; i<titleStr.length; i++) {
+      titleEl.innerHTML += `<span>${titleStr[i]}</span>`;
+    }
 
-        textString.split('').forEach((char) => {
-            const span = document.createElement('span');
-            span.className = 'letter';
-            span.textContent = char;
-            textContainer.appendChild(span);
-        });
+    // merda de la lluvia matrix super tuff 7o7
+    var c = document.getElementById("matrix");
+    var ctx = c.getContext("2d");
 
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
 
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const letters = katakana.split('');
-        const fontSize = 16;
-        let drops = [];
-        let columns = 0;
+    var chars = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    chars = chars.split("");
 
-        const mouse = { x: -1000, y: -1000 };
+    var font_size = 16;
+    var columns = c.width / font_size;
+    var drops = [];
+    
+    // escalonar las gotas iniciales
+    for(var x = 0; x < columns; x++) {
+      drops[x] = Math.random() * -100; 
+    }
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
+    let mouseX = -999;
+    let mouseY = -999;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            columns = Math.floor(canvas.width / fontSize);
-            drops = [];
-            for (let x = 0; x < columns; x++) {
-                drops[x] = Math.random() * -100;
-            }
+    window.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    window.addEventListener('resize', function() {
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+      // no recalcula las columnas perfectamente meh, funciona
+    })
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      ctx.font = font_size + "px monospace";
+
+      for(var i = 0; i < drops.length; i++) {
+        var text = chars[Math.floor(Math.random() * chars.length)];
+        
+        let dropX = i * font_size;
+        let dropY = drops[i] * font_size;
+
+        // comprobar si está cerca del ratón para iluminar
+        let dist = Math.sqrt(Math.pow(dropX - mouseX, 2) + Math.pow(dropY - mouseY, 2));
+
+        if (dist < 150) {
+          ctx.fillStyle = "#fff";
+        } else {
+          ctx.fillStyle = "#0F0"; // verde mmmmmmmmmmm
         }
 
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillText(text, dropX, dropY);
 
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters[Math.floor(Math.random() * letters.length)];
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
-
-                const dx = x - mouse.x;
-                const dy = y - mouse.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 150) {
-                    ctx.fillStyle = '#fff';
-                } else {
-                    ctx.fillStyle = '#0F0';
-                }
-
-                ctx.fillText(text, x, y);
-
-                if (y > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                
-                drops[i]++;
-            }
+        if(drops[i] * font_size > c.height && Math.random() > 0.975) {
+          drops[i] = 0;
         }
 
+        drops[i]++;
+      }
+    }
 
-        window.onload = () => {
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            setInterval(draw, 33);
-        };
-    </script>
+    // console.log("ejecutando matrix...");
+    setInterval(draw, 33); // 30fps maso menos
+  </script>
+
 </body>
 </html>
